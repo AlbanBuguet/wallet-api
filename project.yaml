@@ -1,0 +1,31 @@
+# The project that this repo belongs to, as its team declares it.
+identifier: opco-a-trip-wallet
+title: Trip wallet
+description: Boarding passes, trips and live flight updates in the wallets of the customers of OpCo A.
+lifecycle: Live
+tier: Tier 1
+personal_data: true
+payment_data: false
+internet_facing: true
+ai_use: None
+links:
+  - url: https://dashboards.opco-a.example/trip-wallet
+    type: dashboard
+    title: Trip wallet dashboard
+  - url: https://wiki.opco-a.example/companion/trip-wallet/runbook
+    type: runbook
+    title: Runbook
+repos:
+  - name: wallet-api
+    consumes:
+      - opco-a/accounts-api
+      - opco-a/flight-status-api
+  - name: wallet-pass-signer
+  - name: wallet-web
+    consumes:
+      - wallet-api
+  - name: wallet-notifier
+    consumes:
+      - opco-a/flight-status-events
+      - wallet-pass-signer
+  - name: wallet-infra

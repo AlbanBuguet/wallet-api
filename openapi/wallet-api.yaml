@@ -1,0 +1,43 @@
+openapi: 3.0.3
+info:
+  title: wallet-api
+  version: 1.6.0
+  description: The API of the trip wallet. /v1 only grows (ADR-0005).
+paths:
+  /v1/passes:
+    post:
+      operationId: issuePass
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PassRequest" }
+      responses:
+        "200":
+          description: The signed pass.
+          content:
+            application/vnd.apple.pkpass: {}
+components:
+  schemas:
+    PassRequest:
+      type: object
+      required: [booking, passenger, flight, day, seat, group]
+      properties:
+        booking: { type: string }
+        passenger: { type: string }
+        member: { type: string, description: The loyalty member number, if any. }
+        flight: { type: string }
+        day: { type: string, format: date }
+        seat: { type: string }
+        group: { type: string }
+    BoardingPass:
+      type: object
+      required: [booking, passenger, flight, seat, boarding, group]
+      properties:
+        booking: { type: string }
+        passenger: { type: string }
+        flight: { type: string }
+        seat: { type: string }
+        gate: { type: string }
+        boarding: { type: string }
+        group: { type: string }
